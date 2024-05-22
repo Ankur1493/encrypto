@@ -23,7 +23,7 @@ interface CardWrapperProps {
 export const CardWrapper = ({ children, headerLabel, backButtonLabel, backButtonHref }
   : CardWrapperProps) => {
   return (
-    <Card className="w-[400px] shadow-md bg-fuchsia-100 flex flex-col justify-center items-center">
+    <Card className="w-[400px] shadow-md bg-fuchsia-100 flex flex-col ">
       <CardHeader>
         <h1 className={cn("text-3xl font-semibold text-center", font.className)}>
           {headerLabel}
@@ -33,7 +33,7 @@ export const CardWrapper = ({ children, headerLabel, backButtonLabel, backButton
         {children}
       </CardContent>
       <CardFooter >
-        <div className="w-full flex justify-between items-center border border-black px-10 py-2 rounded-lg bg-black text-white cursor-pointer gap-3">
+        <div className="w-full flex justify-center items-center border border-black px-10 py-2 rounded-lg bg-black text-white cursor-pointer gap-3">
           <div>
             continue with google
           </div>
@@ -41,7 +41,7 @@ export const CardWrapper = ({ children, headerLabel, backButtonLabel, backButton
         </div>
       </CardFooter>
       <CardFooter>
-        <Link href={backButtonHref} className="flex w-full text-gray-700 gap-2">
+        <Link href={backButtonHref} className="flex w-full text-gray-700 gap-2 justify-center items-center">
           {backButtonLabel}
           <ArrowUpRight color="gray" />
         </Link>

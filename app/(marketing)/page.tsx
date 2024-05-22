@@ -26,7 +26,7 @@ export default function() {
         </p>
       </div>
       <Link
-        href={"/"}
+        href={"/auth/login"}
         className="mt-8 p-3 px-5 border-white bg-black text-white text-[20px] font-semibold rounded-xl"
       >
         Get Started for FREE

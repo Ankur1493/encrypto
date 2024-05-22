@@ -9,7 +9,7 @@ export default function Navbar() {
         Encrypto
       </div>
       <div className="flex">
-        <Link href={"/"}>
+        <Link href={"/auth/login"}>
           <Button className="bg-black text-white mr-4">Login</Button>
         </Link>
         <Link href={"https://github.com/ankur1493/encrypto"} target="_blank">

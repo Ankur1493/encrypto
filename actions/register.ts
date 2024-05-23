@@ -1,9 +1,12 @@
 "use server";
 import * as z from "zod"
 import { RegisterSchema } from "@/schemas";
-import bcrypt from "bcryptjs"; // Use bcryptjs instead of bcrypt
+import { AuthError } from "next-auth";
+import bcrypt from "bcryptjs";
+import { signIn } from "@/auth";
 import { db } from "@/lib/db";
 import { getUserByEmail } from "@/data/user";
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
   const validatedFields = RegisterSchema.safeParse(values);
@@ -21,6 +24,20 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
 
   await db.user.create({ data: { name, email, password: hashedPassword } })
 
-  return { success: "User Created" }
-
+  try {
+    await signIn("credentials", {
+      email, password, redirectTo: DEFAULT_LOGIN_REDIRECT
+    })
+    return { success: "user created" }
+  } catch (error) {
+    if (error instanceof AuthError) {
+      switch (error.type) {
+        case "CredentialsSignin":
+          return { error: "Invalid Credentials!" }
+        default:
+          return { error: "Something went wrong" }
+      }
+    }
+    throw error;
+  }
 }

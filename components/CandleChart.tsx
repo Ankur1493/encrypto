@@ -1,9 +1,10 @@
 "use client"
 
 import { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic'; // Import dynamic
 import { formatCryptoData, CryptoDataPoint, FormattedDataPoint } from '@/lib/formatCryptoData';
 import axios from 'axios';
-import ReactApexChart from "react-apexcharts";
+const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false });
 import { candleStickOptions } from "@/constants"
 
 const CandleChart = ({ symbol }: { symbol: string }) => {
@@ -19,19 +20,19 @@ const CandleChart = ({ symbol }: { symbol: string }) => {
 
         for (let i = 0; i < responseData.length; i++) {
           const dataPoint: CryptoDataPoint = {
-            timestamp: responseData[i][0], // Extracting timestamp
-            open: responseData[i][1], // Extracting open price
-            high: responseData[i][2], // Extracting high price
-            low: responseData[i][3], // Extracting low price
-            close: responseData[i][4], // Extracting close price
-            volume: responseData[i][5], // Extracting volume
-            closeTime: responseData[i][6], // Extracting close time
-            quoteAssetVolume: responseData[i][7], // Extracting quote asset volume
-            numberOfTrades: responseData[i][8], // Extracting number of trades
-            takerBuyBaseAssetVolume: responseData[i][9], // Extracting taker buy base asset volume
-            takerBuyQuoteAssetVolume: responseData[i][10], // Extracting taker buy quote asset volume
+            timestamp: responseData[i][0],
+            open: responseData[i][1],
+            high: responseData[i][2],
+            low: responseData[i][3],
+            close: responseData[i][4],
+            volume: responseData[i][5],
+            closeTime: responseData[i][6],
+            quoteAssetVolume: responseData[i][7],
+            numberOfTrades: responseData[i][8],
+            takerBuyBaseAssetVolume: responseData[i][9],
+            takerBuyQuoteAssetVolume: responseData[i][10],
           };
-          cryptoData.push(dataPoint); // Pushing the data point to the cryptoData array
+          cryptoData.push(dataPoint);
         }
 
         const formattedData = formatCryptoData(cryptoData);

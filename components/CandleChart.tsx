@@ -46,10 +46,9 @@ const CandleChart = ({ symbol }: { symbol: string }) => {
 
 
   return (
-    <div className='w-full h-screen flex flex-col gap-3 justify-center items-center'>
-      <p>You can check out the last 30 days performance of your selected crypto</p>
+    <div className='w-screen h-fit flex flex-col justify-center items-center'>
       {formattedData.length > 0 ? (
-        <div className='w-[1000px] bg-gray-200 rounded-lg p-3'>
+        <div className='w-2/4 bg-gray-200 rounded-lg p-3'>
           <ReactApexChart
             series={
               [

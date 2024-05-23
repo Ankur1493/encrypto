@@ -1,12 +1,12 @@
 import React from 'react'
-import { auth, signOut } from '@/auth'
+import { signOut } from '@/auth'
 import { Button } from '@/components/ui/button';
+import CandleChart from '@/components/CandleChart';
 
 const HomePage = async () => {
-  const session = await auth();
   return (
     <div className='h-full flex flex-col justify-center items-center'>
-      {JSON.stringify(session)}
+      <CandleChart symbol='BTCUSDT' />
       <form action={async () => {
         "use server"
         await signOut()

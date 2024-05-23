@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export async function GET(req: NextApiRequest,) {
   try {
-    const { searchParams } = new URL(req.url);
+    const { searchParams } = new URL(req.url || "");
     const symbol = searchParams.get("symbol");
 
     if (!symbol) {
@@ -19,7 +19,7 @@ export async function GET(req: NextApiRequest,) {
     return new Response(response.data)
   } catch (error) {
     console.error('Error fetching historical data:', error);
-    res.status(500).json({ error: 'Failed to fetch historical data' });
+    return new Response("Error fetching the data")
   }
 }
 

@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { Button } from "./ui/button"
 import { Github } from "lucide-react"
-import { auth } from "@/auth"
+import { auth, signOut } from "@/auth"
 
 export default async function Navbar() {
 
@@ -15,10 +15,18 @@ export default async function Navbar() {
       </div>
       <div className="flex">
         {
-          !session &&
-          <Link href={"/auth/login"}>
-            <Button className="bg-black text-white mr-4">Login</Button>
-          </Link>
+          !session ?
+            (
+              <Link href={"/auth/login"}>
+                <Button className="bg-black text-white mr-4">Login</Button>
+              </Link>
+            ) : (
+              <form action={async () => {
+                "use server"
+                await signOut()
+              }}>
+                <Button className='bg-black text-white mr-4' type='submit'>Sign Out</Button>
+              </form>)
         }
         <Link href={"https://github.com/ankur1493/encrypto"} target="_blank">
           <Button className="flex border font-semibold bg-gradient-to-r from-pink-600 to-red-400 text-white"> <Github /> Star us</Button>

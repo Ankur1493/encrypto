@@ -2,7 +2,7 @@ import Link from "next/link"
 import { Award } from "lucide-react"
 
 
-export default function() {
+export default function MarketingPage() {
 
   return (
     <div className="w-screen h-full flex flex-col justify-center items-center">

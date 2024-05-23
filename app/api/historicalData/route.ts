@@ -1,7 +1,7 @@
-import type { NextApiRequest } from 'next';
 import axios from 'axios';
+import { NextRequest } from 'next/server';
 
-export async function GET(req: NextApiRequest,) {
+export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url || "");
     const symbol = searchParams.get("symbol");
@@ -9,11 +9,17 @@ export async function GET(req: NextApiRequest,) {
     if (!symbol) {
       throw new Error('Invalid symbol parameter');
     }
+
+    const endTime = new Date().getTime();
+    const startTime = endTime - 30 * 24 * 60 * 60 * 1000;
+
     const response = await axios.get('https://api.binance.com/api/v3/klines', {
       params: {
         symbol,
-        interval: '1d', // Daily interval
-        limit: 30, // 30 days
+        interval: '1d',
+        limit: 30,
+        startTime,
+        endTime
       },
     });
     return new Response(response.data)

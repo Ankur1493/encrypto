@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react';
 import { formatCryptoData, CryptoDataPoint, FormattedDataPoint } from '@/lib/formatCryptoData';
 import axios from 'axios';
+import ReactApexChart from "react-apexcharts";
+import { candleStickOptions } from "@/constants"
 
 const CandleChart = ({ symbol }: { symbol: string }) => {
   const [formattedData, setFormattedData] = useState<FormattedDataPoint[]>([]);
@@ -34,6 +36,7 @@ const CandleChart = ({ symbol }: { symbol: string }) => {
 
         const formattedData = formatCryptoData(cryptoData);
         setFormattedData(formattedData);
+        console.log(formattedData)
       } catch (error) {
         console.error('Error fetching crypto data:', error);
       }
@@ -42,9 +45,26 @@ const CandleChart = ({ symbol }: { symbol: string }) => {
     fetchData();
   }, [symbol]);
 
+
   return (
-    <div>
-      <div>Historical Data: {JSON.stringify(formattedData)}</div>
+    <div className='w-full h-screen flex justify-center items-center'>
+      {formattedData.length > 0 ? (
+        <div className='w-[800px] bg-gray-500'>
+          <ReactApexChart
+            series={
+              [
+                {
+                  data: formattedData
+                }
+              ]
+            }
+            type="candlestick"
+            //@ts-ignore
+            options={candleStickOptions}
+          />
+        </div>
+      ) : (<h1>Loading....</h1>)
+      }
     </div>
   );
 };

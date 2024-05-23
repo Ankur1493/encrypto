@@ -1,11 +1,11 @@
 "use client"
 
 import { useEffect, useState } from 'react';
-import dynamic from 'next/dynamic'; // Import dynamic
 import { formatCryptoData, CryptoDataPoint, FormattedDataPoint } from '@/lib/formatCryptoData';
 import axios from 'axios';
-const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false });
 import { candleStickOptions } from "@/constants"
+import dynamic from 'next/dynamic'; // Import dynamic
+const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 const CandleChart = ({ symbol }: { symbol: string }) => {
   const [formattedData, setFormattedData] = useState<FormattedDataPoint[]>([]);
@@ -49,7 +49,7 @@ const CandleChart = ({ symbol }: { symbol: string }) => {
   return (
     <div className='w-screen h-fit flex flex-col justify-center items-center'>
       {formattedData.length > 0 ? (
-        <div className='w-2/4 bg-gray-200 rounded-lg p-3'>
+        <div className='sm:w-2/4 bg-gray-200 rounded-lg p-3'>
           <ReactApexChart
             series={
               [

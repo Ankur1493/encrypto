@@ -22,7 +22,7 @@ const HomePage = () => {
     <div className='h-screen pb-[100px] flex flex-col justify-around items-center'>
       <div className='text-center'>
         <h1 className='text-3xl font-bold'>{`${symbol} chart`}</h1>
-        <div className='flex gap-5 items-center justify-center'>
+        <div className='flex flex-col sm:flex-row gap-5 items-center justify-center'>
           <Select onValueChange={handleValueChange}>
             <SelectTrigger className="w-[180px] bg-gray-900  text-white rounded-lg">
               <SelectValue placeholder={symbol} />

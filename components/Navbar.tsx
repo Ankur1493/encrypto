@@ -7,7 +7,7 @@ export default async function Navbar() {
 
   const session = await auth();
   return (
-    <div className="h-16 px-16 flex justify-between items-center shadow-md shadow-gray-400">
+    <div className="h-16 px-3 md:px-16 flex justify-between items-center shadow-md shadow-gray-400">
       <div className="text-2xl font-bold text-yellow-800">
         <Link href={"/"}>
           Encrypto

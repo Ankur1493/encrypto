@@ -15,8 +15,10 @@ export async function GET(req: NextRequest) {
 
     const endTime = new Date().getTime();
     const startTime = endTime - 30 * 24 * 60 * 60 * 1000;
+    console.log(`endTime -- ${endTime}`)
+    console.log(`startTime -- ${startTime}`)
 
-    const response = await axios.get('https://api.binance.com/api/v3/klines', {
+    const response = await axios.get('https://api.binance.com/api/v3/uiKlines', {
       params: {
         symbol,
         interval: '1d',
@@ -25,11 +27,13 @@ export async function GET(req: NextRequest) {
         endTime
       },
     });
-    return new Response(response.data)
+    return new Response(JSON.stringify(response.data), {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
   } catch (error) {
     console.error('Error fetching historical data:', error);
     return new Response("Error fetching the data")
   }
 }
-
-

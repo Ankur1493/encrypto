@@ -13,30 +13,29 @@ const CandleChart = ({ symbol }: { symbol: string }) => {
     const fetchData = async () => {
       try {
         const response = await axios.get(`/api/historicalData?symbol=${symbol}`);
-        const dataString: string = response.data;
-        const dataArray: string[] = dataString.split(',');
+
+        const responseData = response.data;
         const cryptoData: CryptoDataPoint[] = [];
 
-        for (let i = 0; i < dataArray.length; i += 11) {
+        for (let i = 0; i < responseData.length; i++) {
           const dataPoint: CryptoDataPoint = {
-            timestamp: parseInt(dataArray[i]),
-            open: dataArray[i + 1],
-            high: dataArray[i + 2],
-            low: dataArray[i + 3],
-            close: dataArray[i + 4],
-            volume: dataArray[i + 5],
-            closeTime: parseInt(dataArray[i + 6]),
-            quoteAssetVolume: dataArray[i + 7],
-            numberOfTrades: parseInt(dataArray[i + 8]),
-            takerBuyBaseAssetVolume: dataArray[i + 9],
-            takerBuyQuoteAssetVolume: dataArray[i + 10],
+            timestamp: responseData[i][0], // Extracting timestamp
+            open: responseData[i][1], // Extracting open price
+            high: responseData[i][2], // Extracting high price
+            low: responseData[i][3], // Extracting low price
+            close: responseData[i][4], // Extracting close price
+            volume: responseData[i][5], // Extracting volume
+            closeTime: responseData[i][6], // Extracting close time
+            quoteAssetVolume: responseData[i][7], // Extracting quote asset volume
+            numberOfTrades: responseData[i][8], // Extracting number of trades
+            takerBuyBaseAssetVolume: responseData[i][9], // Extracting taker buy base asset volume
+            takerBuyQuoteAssetVolume: responseData[i][10], // Extracting taker buy quote asset volume
           };
-          cryptoData.push(dataPoint);
+          cryptoData.push(dataPoint); // Pushing the data point to the cryptoData array
         }
 
         const formattedData = formatCryptoData(cryptoData);
         setFormattedData(formattedData);
-        console.log(formattedData)
       } catch (error) {
         console.error('Error fetching crypto data:', error);
       }
@@ -47,9 +46,10 @@ const CandleChart = ({ symbol }: { symbol: string }) => {
 
 
   return (
-    <div className='w-full h-screen flex justify-center items-center'>
+    <div className='w-full h-screen flex flex-col gap-3 justify-center items-center'>
+      <p>You can check out the last 30 days performance of your selected crypto</p>
       {formattedData.length > 0 ? (
-        <div className='w-[800px] bg-gray-200'>
+        <div className='w-[1000px] bg-gray-200 rounded-lg p-3'>
           <ReactApexChart
             series={
               [

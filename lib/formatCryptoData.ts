@@ -16,6 +16,7 @@ export interface FormattedDataPoint {
   y: number[];
 }
 
+
 export const formatCryptoData = (cryptoData: CryptoDataPoint[]): FormattedDataPoint[] => {
   const formattedData: FormattedDataPoint[] = [];
 
@@ -29,7 +30,7 @@ export const formatCryptoData = (cryptoData: CryptoDataPoint[]): FormattedDataPo
     return formattedData;
   }
 
-  cryptoData.forEach((dataPoint: any) => {
+  cryptoData.forEach((dataPoint: CryptoDataPoint) => {
     formattedData.push({
       x: new Date(dataPoint.timestamp),
       y: [

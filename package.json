@@ -25,6 +25,7 @@
     "chart.js": "^4.4.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "date-fns": "^3.6.0",
     "lucide-react": "^0.379.0",
     "next": "14.2.3",
     "next-auth": "^5.0.0-beta.18",
@@ -40,6 +41,7 @@
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
     "@types/bcryptjs": "^2.4.6",
+    "@types/date-fns": "^2.6.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-chartjs-2": "^2.5.7",

@@ -13,7 +13,8 @@ export const candleStickOptions = {
   xaxis: {
     type: 'datetime',
     labels: {
-      format: 'dd MMM',
+      datetimeUTC: true,  // Ensure dates are shown in UTC
+      format: 'dd MMM HH:mm'
     }
   },
   yaxis: {

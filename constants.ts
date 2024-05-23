@@ -1,17 +1,25 @@
 export const candleStickOptions = {
   chart: {
-    type: "candlestick",
+    type: 'candlestick',
+    height: 350,
+    toolbar: {
+      show: true,
+    }
   },
   title: {
-    text: "CandleStick Chart",
-    align: "left",
+    text: 'CandleStick Chart',
+    align: 'left'
   },
   xaxis: {
-    type: "datetime",
+    type: 'datetime',
+    labels: {
+      format: 'dd MMM',
+    }
   },
   yaxis: {
     tooltip: {
-      enabled: true,
-    },
-  },
+      enabled: true
+    }
+  }
 };
+

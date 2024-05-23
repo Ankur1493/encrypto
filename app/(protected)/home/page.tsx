@@ -6,7 +6,7 @@ import CandleChart from '@/components/CandleChart';
 const HomePage = async () => {
   return (
     <div className='h-full flex flex-col justify-center items-center'>
-      <CandleChart symbol='BTCUSDT' />
+      <CandleChart symbol='ETHUSDT' />
       <form action={async () => {
         "use server"
         await signOut()

@@ -49,7 +49,7 @@ const CandleChart = ({ symbol }: { symbol: string }) => {
   return (
     <div className='w-full h-screen flex justify-center items-center'>
       {formattedData.length > 0 ? (
-        <div className='w-[800px] bg-gray-500'>
+        <div className='w-[800px] bg-gray-200'>
           <ReactApexChart
             series={
               [

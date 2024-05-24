@@ -7,7 +7,6 @@ import { candleStickOptions } from "@/constants"
 import dynamic from 'next/dynamic'; // Import dynamic
 const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false });
 //import ReactApexChart from "react-apexcharts"
-
 const CandleChart = ({ symbol }: { symbol: string }) => {
   const [formattedData, setFormattedData] = useState<FormattedDataPoint[]>([]);
 
@@ -58,7 +57,18 @@ const CandleChart = ({ symbol }: { symbol: string }) => {
           parseFloat(close),
         ]
       };
-      setFormattedData((prevData) => [...prevData, newDataPoint]);
+      setFormattedData((prevData) => {
+        if (prevData.length > 0) {
+          const lastDataPoint = prevData[prevData.length - 1];
+          const lastDataPointDateStr = lastDataPoint.x.toISOString().split('T')[0];
+          const newDataPointDateStr = newDataPoint.x.toISOString().split('T')[0];
+
+          if (lastDataPointDateStr === newDataPointDateStr) {
+            return [...prevData.slice(0, prevData.length - 1), newDataPoint];
+          }
+        }
+        return [...prevData, newDataPoint];
+      });
     };
 
     return () => ws.close();

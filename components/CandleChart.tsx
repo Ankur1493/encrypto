@@ -68,12 +68,26 @@ const CandleChart = ({ symbol }: { symbol: string }) => {
     <div className='w-screen h-fit flex flex-col justify-center items-center'>
       {formattedData.length > 0 ? (
         <div className='sm:w-2/4 bg-gray-200 rounded-lg p-3'>
-          <ReactApexChart
-            series={[{ data: formattedData }]}
-            type="candlestick"
-            //@ts-ignore
-            options={candleStickOptions}
-          />
+          <div>
+            <ReactApexChart
+              series={[{ data: formattedData }]}
+              type="candlestick"
+              //@ts-ignore
+              options={candleStickOptions}
+            />
+          </div>
+          <div className='flex justify-between'>
+            <p>Last updated at {formattedData[formattedData.length - 1].x.toLocaleString()}</p>
+            <p>Current price - {formattedData[formattedData.length - 1].y[3]}</p>
+            {formattedData.length > 1 && (
+              <p>
+                {formattedData[formattedData.length - 1].y[3] > formattedData[formattedData.length - 2].y[3]
+                  ? 'Price is going up'
+                  : 'Price is going down'}
+                {' '}
+              </p>
+            )}
+          </div>
         </div>
       ) : (<h1>Loading....</h1>)
       }

@@ -15,8 +15,6 @@ export async function GET(req: NextRequest) {
 
     const endTime = new Date().getTime();
     const startTime = endTime - 30 * 24 * 60 * 60 * 1000;
-    console.log(`endTime -- ${endTime}`)
-    console.log(`startTime -- ${startTime}`)
 
     const response = await axios.get('https://api.binance.com/api/v3/uiKlines', {
       params: {

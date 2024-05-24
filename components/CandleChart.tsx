@@ -6,6 +6,7 @@ import axios from 'axios';
 import { candleStickOptions } from "@/constants"
 import dynamic from 'next/dynamic'; // Import dynamic
 const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false });
+//import ReactApexChart from "react-apexcharts"
 
 const CandleChart = ({ symbol }: { symbol: string }) => {
   const [formattedData, setFormattedData] = useState<FormattedDataPoint[]>([]);
@@ -13,8 +14,8 @@ const CandleChart = ({ symbol }: { symbol: string }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // Be sure to replace this URL with the actual endpoint where you fetch historical data
         const response = await axios.get(`/api/historicalData?symbol=${symbol}`);
-
         const responseData = response.data;
         const cryptoData: CryptoDataPoint[] = [];
 
@@ -34,7 +35,6 @@ const CandleChart = ({ symbol }: { symbol: string }) => {
           };
           cryptoData.push(dataPoint);
         }
-
         const formattedData = formatCryptoData(cryptoData);
         setFormattedData(formattedData);
       } catch (error) {
@@ -43,21 +43,33 @@ const CandleChart = ({ symbol }: { symbol: string }) => {
     };
 
     fetchData();
-  }, [symbol]);
 
+    // WebSocket connection for live updates
+    const ws = new WebSocket(`wss://stream.binance.com:9443/ws/${symbol.toLowerCase()}@kline_1m`);
+    ws.onmessage = (event) => {
+      const response = JSON.parse(event.data);
+      const { k: { t: timestamp, o: open, h: high, l: low, c: close } } = response;
+      const newDataPoint: FormattedDataPoint = {
+        x: new Date(timestamp),
+        y: [
+          parseFloat(open),
+          parseFloat(high),
+          parseFloat(low),
+          parseFloat(close),
+        ]
+      };
+      setFormattedData((prevData) => [...prevData, newDataPoint]);
+    };
+
+    return () => ws.close();
+  }, [symbol]);
 
   return (
     <div className='w-screen h-fit flex flex-col justify-center items-center'>
       {formattedData.length > 0 ? (
         <div className='sm:w-2/4 bg-gray-200 rounded-lg p-3'>
           <ReactApexChart
-            series={
-              [
-                {
-                  data: formattedData
-                }
-              ]
-            }
+            series={[{ data: formattedData }]}
             type="candlestick"
             //@ts-ignore
             options={candleStickOptions}
@@ -70,4 +82,3 @@ const CandleChart = ({ symbol }: { symbol: string }) => {
 };
 
 export default CandleChart;
-
